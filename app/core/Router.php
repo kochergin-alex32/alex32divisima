@@ -36,10 +36,35 @@ class Router{
             $controller_name ="\app\controllers\\" . $this->params['controller'] . 'Controller';
             // echo $controller_name;
             if(class_exists($controller_name)){
-                echo 'yes';
-            } else {
-                echo "no";
+                $controller = new $controller_name($this->params);
+                $action_name= $this->params['action'] . 'Action';
+                if(method_exists( $controller, $action_name)){
+                    $controller->$action_name();
+ 
+                }else{
+                    if (PROD){
+                        include 'app/views/404/index.php';
+                    }else{
+
+                        echo 'метод' . $action_name . 'не найден';
+                    }
+                }
+            }else{
+                if (PROD){
+                    include 'app/views/404/index.php';
+                }else{
+             echo'класс' .  $controller_name . 'не найден';
+                }
             }
+         //    $mainController =  new $controller_name;
+         //    $mainController->indexAction();
+ 
+         } else {
+            if (PROD){
+                include 'app/views/404/index.php';
+            }else{
+             echo '404 page not found';
+            }
+         }
         }
     }
-}
