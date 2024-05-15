@@ -1,9 +1,8 @@
 <?
 namespace app\models;
-class Main{
-    public function __construct()
-    {
-        // echo 'main model';
-    } 
 
+use app\core\Model;
+
+class Main extends Model{
+   
 }
