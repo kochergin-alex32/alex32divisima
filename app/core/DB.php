@@ -39,4 +39,21 @@ class DB {
         }
 
     }
+    public function fetchAll($table){
+       
+        $stmt = $this->db->prepare("SELECT * from {$table}");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+        // debug($res);
+      }
+      public function fetchOne($id,$table){
+        $stmt = $this->db->prepare("SELECT  FROM{$table} WHERE id=?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(\PDO::FETCH_OBJ);
+      }
+      public function custom_query($query,$params= null){
+        $stmt = $this->db->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(\PDO::FETCH_OBJ);
+      }
 }
